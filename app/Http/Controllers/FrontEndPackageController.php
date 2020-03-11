@@ -9,6 +9,7 @@ use App\Models\FooterPhoneNumber;
 use App\Models\Package;
 use App\Models\PackageCountry;
 use App\Models\PackageDivision;
+use App\Models\PackageOrder;
 use App\Models\PackList;
 use Illuminate\Http\Request;
 
@@ -141,7 +142,7 @@ class FrontEndPackageController extends Controller
         ]);
     }
     public function bookPackage($id){
-      $package = Package::where('id', $id)->select('name')->first();
+      $package = Package::where('id', $id)->select('id','name')->first();
       return view('frontEnd.booking_package.book-package', ['package' => $package]);
     }
 
@@ -158,4 +159,23 @@ class FrontEndPackageController extends Controller
         ]);
     }
     // 06.08.19 End
+
+    // 11.03.20 Start
+    public function confirmPackageBooking(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'phone_number' => 'required',
+            'email_address' => 'required',
+        ]);
+        $package_name = Package::where('id', $request->id)->select('id', 'name')->first();
+
+        $packge_order = new PackageOrder();
+        $packge_order->package_name = $package_name->name;
+        $packge_order->name = $request->name;
+        $packge_order->phone_number = $request->phone_number;
+        $packge_order->email_address = $request->email_address;
+        $packge_order->save();
+        return back()->with('message', 'Your Contact Information Saved Successfully');
+    }
+    // 11.03.20 End
 }

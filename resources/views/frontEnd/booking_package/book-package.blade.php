@@ -32,7 +32,7 @@
                             <label>Enter your phone</label>
                         </div>
                         <div class="input-field col s6">
-                            <input type="email"  class="validate" name="email" required >
+                            <input type="email"  class="validate" name="email_address" required >
                             <label>Enter your email</label>
                         </div>
                     </div>
@@ -41,9 +41,9 @@
                                 <strong style="color: red; float: left">{{ $errors->first('phone_number') }}</strong>
                             </span>
                     @endif
-                    @if ($errors->has('email'))
+                    @if ($errors->has('email_address'))
                         <span class="invalid-feedback" role="alert">
-                                <strong style="color: red">{{ $errors->first('email') }}</strong>
+                                <strong style="color: red">{{ $errors->first('email_address') }}</strong>
                             </span>
                     @endif
 

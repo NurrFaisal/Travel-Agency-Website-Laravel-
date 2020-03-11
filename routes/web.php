@@ -56,6 +56,7 @@ Route::get('/package-list/{cid}/{pid}', 'FrontEndPackageController@packageListBy
 
 Route::get('/package-detail/{id}', 'FrontEndPackageController@packageDetailById');
 Route::get('/book-package/{id}', 'FrontEndPackageController@bookPackage');
+Route::post('/confirm-package-booking', 'FrontEndPackageController@confirmPackageBooking');
 
 //06.08.19 start
 
@@ -126,8 +127,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/apanel/dashboard', 'BackEndController@dashBoard');
 
     // SearchAdminController Strat
-    
-    
+
+
 // AirTicketDestination Controller Star
 
 Route::get('/apanel/air-ticket-destination', 'AirTicketDestinationController@airTicketDestination');
