@@ -349,6 +349,12 @@ Route::get('/add-air-ticket-destination', function () {
     Route::get('/apanel/delete-package-division/{id}', 'BackPackageController@deletePackageDivision');
 // package Divison End
 
+    // Package Order Start
+    Route::get('/apanel/package-order', 'BackPackageController@packageOrder');
+    Route::post('/update-package-order', 'BackPackageController@updatePackageOrder');
+    Route::get('/delete-package-order/{id}', 'BackPackageController@deletePackageOrder');
+    // Package Order End
+
     //AirTicketTitleController Start
 
     Route::get('/apanel/air-ticket-title', 'AirTicketTitleController@airTicketTitle');

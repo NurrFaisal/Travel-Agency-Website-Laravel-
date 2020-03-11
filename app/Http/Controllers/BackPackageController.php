@@ -10,6 +10,7 @@ use App\Models\Package;
 use App\Models\PackageCountry;
 use App\Models\PackageDivision;
 use App\Models\PackageGellery;
+use App\Models\PackageOrder;
 use App\Models\PackageTab;
 use App\Models\PackList;
 use App\Models\TabHotel;
@@ -587,4 +588,31 @@ class BackPackageController extends Controller
     }
 
     // package Division End
+
+    public function packageOrder(){
+        $package_orders = PackageOrder::orderBy('id', 'desc')->paginate(10);
+        return view('backEnd.package_order.package_order', ['package_orders' => $package_orders]);
+    }
+
+    public function updatePackageOrder(Request $request){
+        $request->validate([
+            'id' => 'required',
+            'package_name' => 'required',
+            'name' => 'required',
+            'phone_number' => 'required',
+            'email_address' => 'required',
+        ]);
+        $package_order = PackageOrder::where('id', $request->id)->first();
+        $package_order->package_name = $request->package_name;
+        $package_order->name = $request->name;
+        $package_order->phone_number = $request->phone_number;
+        $package_order->email_address = $request->email_address;
+        $package_order->update();
+        return back()->with('message', 'Package Order Updated Successfully!!!');
+    }
+    public function deletePackageOrder($id){
+        $package_order = PackageOrder::where('id', $id)->first();
+        $package_order->delete();
+        return back()->with('message', 'Package Order Deleted Successfully');
+    }
 }
