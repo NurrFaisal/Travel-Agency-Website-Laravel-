@@ -1,0 +1,99 @@
+@extends('backEnd.index')
+
+@section('mainContent')
+    <div id="content" class="pmd-content inner-page">
+        <!--tab start-->
+        <div class="container-fluid full-width-container value-added-detail-page">
+            <div>
+                {{--<div class="pull-right table-title-top-action">--}}
+                    {{--<div class="pmd-textfield pull-left">--}}
+                        {{--<input type="text" id="exampleInputAmount" class="form-control" placeholder="Search for...">--}}
+                    {{--</div>--}}
+                    {{--<a href="javascript:void(0);" class="btn btn-primary pmd-btn-raised add-btn pmd-ripple-effect pull-left">Search</a>--}}
+                {{--</div>--}}
+                <!-- Title -->
+                <br/>
+                @include('backEnd.airTicket.airLines.include.airLine_modal')
+                <div style="text-align: center" class="alert alert-{{Session::get('type')}}"><b>{{Session::get('message')}}</b></div>
+                <h1 class="section-title" id="services">
+                    <span>Air Lines List</span>
+                </h1><!-- End Title -->
+                <!--breadcrum start-->
+            </div>
+            <!-- Table -->
+            <div class="table-responsive pmd-card pmd-z-depth">
+                <table class="table table-mc-red pmd-table">
+                    <thead>
+                    <tr>
+                        <th>SL.</th>
+                        <th>Name</th>
+                        <th>Box Image</th>
+                        <th>Background Image</th>
+                        <th>Status</th>
+                        <th>Last Updated On</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php $i = 1; @endphp
+                    @foreach($air_lines as $air_line)
+                    <tr>
+                        <td data-title="Ticket No">{{$i++}}</td>
+                        <td data-title="Month">{{$air_line->name}}</td>
+                        <td data-title="Browser Name">
+                            <img style="width: 100px; height: 100px" src="{{asset($air_line->up_image)}}" />
+                        </td>
+                        <td data-title="Browser Name">
+                            <img style="width: 200px; height: 100px" src="{{asset($air_line->down_image)}}" />
+                        </td>
+                        <td data-title="Status"><span class="status-btn blue-bg">{{$air_line->status == 1 ? 'Published' : 'Unpublished'}}</span></td>
+                        <td data-title="date">{{$air_line->updated_at}}</td>
+                        <td class="pmd-table-row-action">
+                            <a data-target="#form-dialog-sub{{$air_line->id}}" data-toggle="modal" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-default btn-sm">
+                                <i class="material-icons md-dark pmd-sm">edit</i>
+                            </a>
+                            @if(Session::get('admin') == 1)
+                            <a href="{{URL::to('/apanel/delete-air-line/'.$air_line->id)}}" onclick="return confirm('Are You Sure? You Want To Delete This Air Ticket Title !!!')" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-default btn-sm">
+                                <i class="material-icons md-dark pmd-sm">delete</i>
+                            </a>
+                             @endif
+                        </td>
+                    </tr>
+                    @include('backEnd.airTicket.airLines.include.airLine_update_modal')
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+            <div style="float: right">
+                {{ $air_lines->links() }}
+            </div>
+        </div>
+    </div>
+
+    <script type='text/javascript'>
+        function preview_image(id)
+        {
+            var reader = new FileReader();
+            reader.onload = function()
+            {
+                var output = document.getElementById('output_image_'+id);
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <script type='text/javascript'>
+        function preview_image2(id)
+        {
+            var reader = new FileReader();
+            reader.onload = function()
+            {
+                var output = document.getElementById('output_image2_'+id);
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+@endsection
